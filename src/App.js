@@ -5,11 +5,11 @@ import './App.css'
 const App = React.createClass({
   getInitialState () {
     return {
-      data: {}
+      data: []
     }
   },
   componentDidMount () {
-    axios.get('http://localhost:8080')
+    axios.get('http://localhost:8080/api/snaps/all')
       .then((res) => {
         this.setState({ data: res.data })
       })
@@ -18,10 +18,16 @@ const App = React.createClass({
       })
   },
   render () {
+    const dataList = this.state.data.map((obj) => {
+      return <li key={obj._id}>{obj._id}</li>
+    })
     return (
       <div>
         <h1>Ohai</h1>
         <pre><code>{JSON.stringify(this.state.data)}</code></pre>
+        <ul>
+          {dataList}
+        </ul>
       </div>
     )
   }
